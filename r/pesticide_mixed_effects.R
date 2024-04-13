@@ -9,7 +9,7 @@ library(lmerTest)
 library(MuMIn)
 
 #JA's code to determine the correct multiplier 
-x = as.matrix(read.delim('16S_crust_watersamples.txt'))
+x = as.matrix(read.delim('data/data:modified/16S_crust_watersamples.txt'))
 
 x = na.omit(matrix(as.numeric(x),nrow(x),ncol(x),dimnames=list(rownames(x),colnames(x))))
 
@@ -39,10 +39,10 @@ z = round(t(t(x) * m))
 table(z)
 
 #sadrad
-source('sadrad.R')
+source('r/sadrad.R')
 
 #Defining a function
-source('inverse_x_distribution.R')
+source('r/inverse_x_distribution.R')
 
 #Richness
 est = array()
@@ -79,7 +79,7 @@ location = as.factor(location)
 summary(glm(log(inv_est) ~ location))
 
 #Import pesticide data
-pesticide <- read.delim('Pesticide_Water_TCP20_withoutDetectionThreshold.txt',row.names = 1)
+pesticide <- read.delim('data/data:raw:/pesticide_water_tcp20_without_detection_threshold.txt',row.names = 1)
 pesticide
 
 #Figure out how many columns and rows 

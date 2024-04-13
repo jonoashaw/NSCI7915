@@ -9,7 +9,7 @@ library(lmerTest)
 library(MuMIn)
 
 #JA's code to determine the correct multiplier 
-x = as.matrix(read.delim('16S_crust_watersamples.txt'))
+x = as.matrix(read.delim('data/data:modified/16S_crust_watersamples.txt'))
 
 x = na.omit(matrix(as.numeric(x),nrow(x),ncol(x),dimnames=list(rownames(x),colnames(x))))
 
@@ -39,10 +39,10 @@ z = round(t(t(x) * m))
 table(z)
 
 #sadrad
-source('sadrad.R')
+source('r/sadrad.R')
 
 #Defining a function
-source('inverse_x_distribution.R')
+source('r/inverse_x_distribution.R')
 
 #Richness
 est = array()
@@ -79,7 +79,7 @@ location = as.factor(location)
 summary(glm(log(inv_est) ~ location))
 
 #Import physicochemical data
-chemical <- read.delim('Natural_stressors_environmental_data_TCP20.txt',row.names = 1)
+chemical <- read.delim('data/data:raw:/natural_stressors_environmental_data_tcp20.txt',row.names = 1)
 chemical
 
 #Figure out how many columns and rows 
@@ -111,3 +111,4 @@ xy = data.frame(xy)
 head(xy)
 summary(lmer(log(inv_est) ~ Comp.1 + (1|location),data = xy))
 r.squaredGLMM(lmer(log(inv_est) ~ p[,1:5] + (1|location)))
+
