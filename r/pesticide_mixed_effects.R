@@ -60,7 +60,7 @@ for (i in 1:ncol(z))	{
 }
 
 est[est < 0] = NA
-names(est) = colnames(x)
+names(inv_est) = colnames(x)
 
 #n = colnames(x)
 #for (i in 1:length(n))
@@ -111,3 +111,5 @@ xy = data.frame(xy)
 head(xy)
 summary(lmer(log(inv_est) ~ Comp.1 + (1|location),data = xy))
 r.squaredGLMM(lmer(log(inv_est) ~ p[,1:5] + (1|location)))
+summary(lmer(log(inv_est) ~p[,1:5] + (1|location),data = xy))
+p
