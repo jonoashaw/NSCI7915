@@ -95,7 +95,7 @@ pesticde2 = t(pesticde2)
 pesticide2
 
 #Collapse pesticide data into less variables 
-p <- princomp(t(pesticide2))$loadings
+p <- princomp(scale(log(t(pesticide2))))$loadings
 summary(glm(log(inv_est) ~ p[,1:1]))
 
 #Mixed-effects
@@ -113,3 +113,6 @@ summary(lmer(log(inv_est) ~ Comp.1 + (1|location),data = xy))
 r.squaredGLMM(lmer(log(inv_est) ~ p[,1:5] + (1|location)))
 summary(lmer(log(inv_est) ~p[,1:5] + (1|location),data = xy))
 p
+colnames(p)
+dim(p)
+cbind(rownames(p),rownames(p3))
