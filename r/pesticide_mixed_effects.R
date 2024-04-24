@@ -48,6 +48,7 @@ source('r/inverse_x_distribution.R')
 est = array()
 inv_est = array()
 
+source("r/r:functions:/ipower.R")
 for (i in 1:ncol(z))	{
   n = z[,i]
   n = n[n > 0]
@@ -55,7 +56,8 @@ for (i in 1:ncol(z))	{
   #	plot(k$fitted.curve,type='l')
   #	points(k$subsampled.richness,cex=0.3,col='red')
   #est[i] = k$asymptotic.richness
-  inv_est[i] = inv(n)$richness
+  #inv_est[i] = ipower(n)$richness
+  inv_est[i] = sodds(n)$richness
   #	readline()
 }
 
