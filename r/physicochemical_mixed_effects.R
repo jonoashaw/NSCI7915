@@ -1,5 +1,6 @@
 #Physicochemical mixed effects
-
+#Conducting analyses on crustacean community data in the context of physicochemical data
+#Package installation and loading 
 install.packages('lme4')
 install.packages('nlme')
 install.packages('lmerTest')
@@ -9,7 +10,6 @@ install.packages('poilog')
 install.packages('sads')
 install.packages('r/r:functions:/richness-2.3', repos = NULL, type = "source")
 install.packages("minpack.lm")
-
 library(lme4)
 library(lmerTest)
 library(MuMIn)
@@ -38,7 +38,7 @@ for (i in 1:ncol(y2))	{
   }
 }
 
-# column 9 looks like 24, and 30 like 18
+#Column 9 looks like 24, and 30 like 18
 
 m2[9] = 24
 m2[30] = 18
@@ -53,7 +53,7 @@ source('r/sadrad.R')
 #Defining a function
 source('r/inverse_x_distribution.R')
 
-#Richness
+#Richness estimation 
 est = array()
 inv_est = array()
 
@@ -85,19 +85,21 @@ inv_est
 #crust_12S_estimates = est
 #save(crust_12S_estimates,file='crust_12S_estimates')
 
+#Create factor variable 'location' based on the sample names
 location = array()
 
 for (i in 1:30)
   location[i] = strsplit(colnames(x2)[i],'_')[[1]][1]
 location = as.factor(location)
 
+#Fit generalised linear model to analyse the relationship between the log-transformed inverse estimated richness and location
 summary(glm(log(inv_est) ~ location))
 
 #Import physicochemical data
 chemical <- read.delim('data/data:raw:/natural_stressors_environmental_data_tcp20.txt',row.names = 1)
 chemical
 
-#getting rid of coordinate data 
+#Removing uneccessary coordinate data 
 cbind(colnames(chemical), 1:ncol(chemical))
 chemical = chemical[,-c(9,20:21,23:33)]
 chemical
@@ -121,19 +123,29 @@ chemical2 = t(chemical2)
 chemical2
 
 #Collapse physicochemical data into less variables 
+#Conduct principal component analysis on the scaled physicochemical data and retain the scores
 p3 <- princomp(scale(t(chemical2)))$scores
-#Water conductivity/Salinity - how are crustaceans affected? 
-#This is salinity - look at Aashi's recently published paper which shows that ->
-#fish and shark communities are influenced by salinity in the same estuaries 
-summary(glm(log(inv_est) ~ p3[,1:5]))
+p3
 
-#glm with location as a variable
+#Fit generalised linear model to analyse the relationship between the log-transformed inverse estimated richness
+#and the first five principal components of the physicochemical data 
+#Water conductivity/Salinity - how are crustaceans affected? 
+#This is salinity - look at Parikh et al. 2024 which shows similar results
+summary(glm(log(inv_est) ~ p3[,1:5]))
+#None of the first five principal components are significantly associated with 'log(inv_est)'
+
+#GLM with location as a variable
 #Diversity of MA is really low 
 summary(glm(log(inv_est) ~ location))
 chemical2[6,]
 
-#Mixed-effects
+#Fit mixed-effects model to analyse the relationship between the log-transformed inverse estimated richness 
+#and the first five principal components of the physicochemical data, with location as a random effect
 summary(lmer(log(inv_est) ~ p3[,1:5] + (1|location)))
+#Some variability in 'log(inv_est)' between different locations, but the fixed effects do not explain a significant
+#portion of the variance
+
+#Calculate marginal and conditional R-squared values
 r.squaredGLMM(lmer(log(inv_est) ~ p3[,1:5] + (1|location)))
 
 #An idea of what distribution we are dealing with 
