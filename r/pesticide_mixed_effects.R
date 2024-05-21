@@ -105,8 +105,9 @@ dim(ps)
 length(b)
 exp(ps[,3])^0.05
 
-plot(ps, cex = 0)
-text(ps, labels = b, cex = 1 - 0 * exp(ps[,3])^0.05, col=hsv(h=as.numeric(as.factor(b))/4))
+plot(ps, cex = 0, xlab = "Principal Component 1", ylab = "Principal Component 2")
+text(ps, labels = b, xlab = 'Component 1', ylab = 'Component 2', cex = 1 - 0 * exp(ps[,3])^0.05, col=hsv(h=as.numeric(as.factor(b))/4))
+
 #Each point in the plot represents a richness estimation method, and its position is determined by its scores 
 #on the principal components. 
 #Each point on the plot corresponds to one of the richness estimation methods. The labels near each point typically
