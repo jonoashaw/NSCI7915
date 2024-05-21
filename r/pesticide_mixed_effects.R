@@ -229,5 +229,6 @@ legend('topright',c('data', 'IP', 'LS'),col = c('black', 'violet', 'cyan'),lwd =
 #Differences between models
 #If one model fits better in the high-rank region (most abundant species) and another in the low-rank region (rare species), it suggests that different
 #processes might govern the abundance of common and rare species 
+
  
 
