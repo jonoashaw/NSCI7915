@@ -52,6 +52,19 @@ ranef(mastermodel)
 sum(chemical2 == 0)
 sum(pesticide2 < 0)
 
+#Q-Q plot
+#Extract the residuals
+residuals <- residuals(mastermodel)
+#Create a Q-Q plot
+png("qqplot.png")
+qqnorm(residuals)
+qqline(residuals)
+dev.off()
+
+#Save the mastermodel summary output 
+summary_text <- capture.output(summary(mastermodel))
+writeLines(summary_text, "summary_output.txt")
+
 #Histograms of pesticide data are plotted for visual inspection 
 for (i in 1:nrow(pesticide2)) { 
   hist(as.numeric(pesticide2[i,]))
@@ -87,3 +100,6 @@ summary(lm(log(inv_est) ~ pt1 + pt2 + ch1 + ch2 + ch3 + ch4 + location, data = s
 #by the low R^2 value, and the non-significant F-statistic. 
 #Additionally, none of the individual predictor variables appear to be statistically significant
 #, as indicated by their p-values. 
+
+chemical2
+pesticide2

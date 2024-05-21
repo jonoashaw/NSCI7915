@@ -47,6 +47,12 @@ source('r/sadrad.R')
 source('r/inverse_x_distribution.R')
 
 #Richness
+?richness
+?halfpower
+?ipower
+?sodds
+?logd
+?par
 #Estimates richness of crustacean communities using halfpower, ipower, sodds, and logd. 
 #Calculates AICc values for each richness estimation. 
 est = array()
@@ -100,7 +106,7 @@ length(b)
 exp(ps[,3])^0.05
 
 plot(ps, cex = 0)
-text(ps, labels = b, cex = 2 - exp(ps[,3])^0.05, col=hsv(h=as.numeric(as.factor(b))/4))
+text(ps, labels = b, cex = 1 - 0 * exp(ps[,3])^0.05, col=hsv(h=as.numeric(as.factor(b))/4))
 #Each point in the plot represents a richness estimation method, and its position is determined by its scores 
 #on the principal components. 
 #Each point on the plot corresponds to one of the richness estimation methods. The labels near each point typically
@@ -183,7 +189,7 @@ colnames(p)
 dim(p)
 cbind(rownames(p),rownames(p3))
 
-#Plotting rank abundance distributions for each of the 30 microbial communities represented 
+#Plotting rank abundance distributions for each of the crustacean communities represented 
 #in the dataset 'z'
 #Overlays fitted rank abundance distributions using ipower and logd to compare their fits to
 #the observed data 
@@ -195,6 +201,7 @@ n = rev(sort(n))
 plot(n, type = 'l', bty = 'l', log = 'y', xlab = 'Rank of Count', ylab = "Count of Reads")
 lines(rev(ipower(n)$fitted.RAD),col = 'violet')
 lines(rev(logd(n)$fitted.RAD),col = 'cyan')
+legend('topright',c('data', 'IP', 'LS'),col = c('black', 'violet', 'cyan'),lwd = 1, cex = 0.8)
 }
 #The x-axis represents the rank of each count (species)
 #The y-axis represents the count of reads, plotted on a logarithmic scale
@@ -223,6 +230,4 @@ lines(rev(logd(n)$fitted.RAD),col = 'cyan')
 #If one model fits better in the high-rank region (most abundant species) and another in the low-rank region (rare species), it suggests that different
 #processes might govern the abundance of common and rare species 
  
-?par
 
-#Read manual pages for iPower and JA's overall richness package to better understand what is going on 
