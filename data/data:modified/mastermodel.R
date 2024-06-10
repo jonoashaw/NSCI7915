@@ -101,5 +101,3 @@ summary(lm(log(inv_est) ~ pt1 + pt2 + ch1 + ch2 + ch3 + ch4 + location, data = s
 #Additionally, none of the individual predictor variables appear to be statistically significant
 #, as indicated by their p-values. 
 
-chemical2
-pesticide2
