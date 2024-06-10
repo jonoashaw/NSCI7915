@@ -231,4 +231,3 @@ legend('topright',c('data', 'IP', 'LS'),col = c('black', 'violet', 'cyan'),lwd =
 #processes might govern the abundance of common and rare species 
 
  
-
